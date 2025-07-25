@@ -59,46 +59,46 @@ end
 ## Juniper PE configuration 
 ##
 
-set policy-options policy-statement customer-8928-EBGP-VRF-2171-{{jslid}}-EXPORT term 10 from community customer-8928-MATCH-EXTCOM-SOO-{{jslid}}
-set policy-options policy-statement customer-8928-EBGP-VRF-2171-{{jslid}}-EXPORT term 10 then reject
-set policy-options policy-statement customer-8928-EBGP-VRF-2171-{{jslid}}-EXPORT then accept
-set policy-options policy-statement customer-8928-EBGP-VRF-2171-{{jslid}}-IMPORT term 10 then community add customer-8928-SET-EXTCOM-SOO-{{jslid}}
-set policy-options policy-statement customer-8928-EBGP-VRF-2171-{{jslid}}-IMPORT then accept
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT term 10 from protocol static
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT term 10 from protocol direct
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT term 10 from protocol bgp
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT term 10 then community add customer-8928-SET-EXTCOM-RT-8928:1429
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT term 10 then accept
-set policy-options policy-statement customer-8928-VRF-2171-EXPORT then reject
-set policy-options policy-statement customer-8928-VRF-2171-IMPORT term 10 from protocol bgp
-set policy-options policy-statement customer-8928-VRF-2171-IMPORT term 10 from community customer-8928-MATCH-EXTCOM-RT-8928:1429
-set policy-options policy-statement customer-8928-VRF-2171-IMPORT term 10 then accept
-set policy-options policy-statement customer-8928-VRF-2171-IMPORT then reject
-set routing-instances l3vpn-8928-VRF-2171 description "Telenor Sverige AB - WSP Monitoring"
-set routing-instances l3vpn-8928-VRF-2171 instance-type vrf
-set routing-instances l3vpn-8928-VRF-2171 interface {{peif}}
-set routing-instances l3vpn-8928-VRF-2171 route-distinguisher 8928:2037
-set routing-instances l3vpn-8928-VRF-2171 vrf-import customer-8928-VRF-2171-IMPORT
-set routing-instances l3vpn-8928-VRF-2171 vrf-export customer-8928-VRF-2171-EXPORT
-set routing-instances l3vpn-8928-VRF-2171 vrf-export IPVPN-LEGACY-SITE-PRIORITY
-set routing-instances l3vpn-8928-VRF-2171 vrf-table-label
-set routing-instances l3vpn-8928-VRF-2171 routing-options auto-export
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 type external
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 minimum-hold-time 15
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 family inet unicast prefix-limit maximum 500
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} description "Telenor Sverige AB WSP {{slid}}"
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} hold-time 30
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} import customer-8928-EBGP-VRF-2171-{{jslid}}-IMPORT
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} import FILTER-NMS-SHARED-POLICY
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} export customer-8928-EBGP-VRF-2171-{{jslid}}-EXPORT
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} peer-as {{local_asn}}
-set routing-instances l3vpn-8928-VRF-2171 protocols bgp group VRF-2171 neighbor {{ce_wan}} as-override
+set policy-options policy-statement customer-EBGP-VRF-2171-{{jslid}}-EXPORT term 10 from community customer-MATCH-EXTCOM-SOO-{{jslid}}
+set policy-options policy-statement customer-EBGP-VRF-2171-{{jslid}}-EXPORT term 10 then reject
+set policy-options policy-statement customer-EBGP-VRF-2171-{{jslid}}-EXPORT then accept
+set policy-options policy-statement customer-EBGP-VRF-2171-{{jslid}}-IMPORT term 10 then community add customer-SET-EXTCOM-SOO-{{jslid}}
+set policy-options policy-statement customer-EBGP-VRF-2171-{{jslid}}-IMPORT then accept
+set policy-options policy-statement customer-VRF-2171-EXPORT term 10 from protocol static
+set policy-options policy-statement customer-VRF-2171-EXPORT term 10 from protocol direct
+set policy-options policy-statement customer-VRF-2171-EXPORT term 10 from protocol bgp
+set policy-options policy-statement customer-VRF-2171-EXPORT term 10 then community add customer-SET-EXTCOM-RT-8928:1429
+set policy-options policy-statement customer-VRF-2171-EXPORT term 10 then accept
+set policy-options policy-statement customer-VRF-2171-EXPORT then reject
+set policy-options policy-statement customer-VRF-2171-IMPORT term 10 from protocol bgp
+set policy-options policy-statement customer-VRF-2171-IMPORT term 10 from community customer-MATCH-EXTCOM-RT-8928:1429
+set policy-options policy-statement customer-VRF-2171-IMPORT term 10 then accept
+set policy-options policy-statement customer-VRF-2171-IMPORT then reject
+set routing-instances {{ vrf_name }} description "VRF Description"
+set routing-instances {{ vrf_name }} instance-type vrf
+set routing-instances {{ vrf_name }} interface {{peif}}
+set routing-instances {{ vrf_name }} route-distinguisher 8928:2037
+set routing-instances {{ vrf_name }} vrf-import customer-VRF-2171-IMPORT
+set routing-instances {{ vrf_name }} vrf-export customer-VRF-2171-EXPORT
+set routing-instances {{ vrf_name }} vrf-export IPVPN-LEGACY-SITE-PRIORITY
+set routing-instances {{ vrf_name }} vrf-table-label
+set routing-instances {{ vrf_name }} routing-options auto-export
+set routing-instances {{ vrf_name }} protocols bgp group customer type external
+set routing-instances {{ vrf_name }} protocols bgp group customer minimum-hold-time 15
+set routing-instances {{ vrf_name }} protocols bgp group customer family inet unicast prefix-limit maximum 500
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} description "Customer name {{slid}}"
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} hold-time 30
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} import customer-EBGP-VRF-{{jslid}}-IMPORT
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} import FILTER-NMS-SHARED-POLICY
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} export customer-EBGP-VRF-{{jslid}}-EXPORT
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} peer-as {{local_asn}}
+set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} as-override
 
-set policy-options community customer-8928-MATCH-EXTCOM-RT-8928:1429 members target:8928:1429 
-set policy-options community customer-8928-SET-EXTCOM-RT-8928:1429 members target:8928:1429 
+set policy-options community customer-MATCH-EXTCOM-RT-8928:1429 members target:8928:1429
+set policy-options community customer-SET-EXTCOM-RT-8928:1429 members target:8928:1429
 
-set policy-options community customer-8928-MATCH-EXTCOM-SOO-{{jslid}} members origin:8928:{{jslid}}
-set policy-options community customer-8928-SET-EXTCOM-SOO-{{jslid}} members origin:8928:{{jslid}}
+set policy-options community customer-MATCH-EXTCOM-SOO-{{jslid}} members origin:8928:{{jslid}}
+set policy-options community customer-SET-EXTCOM-SOO-{{jslid}} members origin:8928:{{jslid}}
 
 
 

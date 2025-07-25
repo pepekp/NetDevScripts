@@ -41,6 +41,7 @@ if __name__=="__main__":
 #User Input start here.
 
 casn = input("CE ASN: ")
+vrf_name = input("VRF name: ")
 cpewan = input("CPE WAN IF: ")
 slidid = input("POP SLID: ")
 LoIP = input("Loopback: ")
@@ -60,7 +61,7 @@ hslid = slidid.split("-")[1]
 env = Environment(loader=file_loader)
 template = env.get_template('j_wsp.j2')
 #Add the variables
-output = template.render(local_asn=casn, bgp_nbr=WANIP, wanif=cpewan, ce_wan=GW, lo_addr=LoIP, slid=slidid, jslid=hslid, peif=peifc)
+output = template.render(local_asn=casn, vrf_name=vrf_name, bgp_nbr=WANIP, wanif=cpewan, ce_wan=GW, lo_addr=LoIP, slid=slidid, jslid=hslid, peif=peifc)
 #Print template
 print(output)
 print("")
