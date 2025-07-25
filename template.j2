@@ -30,7 +30,7 @@ router bgp {{local_asn}}
 !
 ip prefix-list BGP-EXPORT description Advertise only networks in this list
 ip prefix-list BGP-EXPORT seq 5 deny 0.0.0.0/0
-ip prefix-list BGP-EXPORT seq 10 permit {{network_addr}}{{cdr}}
+ip prefix-list BGP-EXPORT seq 10 permit {{network_addr}}
 !
 route-map BGP-EXPORT permit 10
  match ip address prefix-list BGP-EXPORT

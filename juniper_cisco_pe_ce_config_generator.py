@@ -60,7 +60,7 @@ def cfg_gen():
                              ce_wan=gw, desc=desc, peif=peifc, netmask=netmask, network_addr=network_addr)
     # Print template
     print(output)
-    print("")
+    print("Configuration has been generate")
     print("")
 
 if __name__=="__main__":
