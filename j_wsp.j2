@@ -1,19 +1,19 @@
 !
 !
-ip vrf WSP
+ip vrf {{ce_vrf_name}}
  descripton Monitoring
  rd 65534:100
 !
 interface Loopback100
  description Monitoring
- ip vrf forwarding WSP
+ ip vrf forwarding {{ce_vrf_name}}
  ip address {{lo_addr}} 255.255.255.255
 
 
 interface {{wanif}}.100
- description WPS Monitoring {{slid}}
+ description Customer {{slid}}
  encapsulation dot1Q 100
- ip vrf forwarding WSP
+ ip vrf forwarding {{ ce_vrf_name }}
  ip address {{ce_wan}} 255.255.255.252
 !
 !
@@ -21,33 +21,31 @@ router bgp {{local_asn}}
  bgp router-id {{ce_wan}}
  bgp log-neighbor-changes
  timers bgp 10 30
- address-family ipv4 vrf WSP
-  redistribute connected route-map BGP-EXPORT-PRI
-  redistribute static route-map BGP-EXPORT-PRI
-  neighbor {{bgp_nbr}} remote-as 3257
+ address-family ipv4 vrf {{ ce_vrf_name }}
+  redistribute connected route-map BGP-EXPORT
+  redistribute static route-map BGP-EXPORT
+  neighbor {{bgp_nbr}} remote-as 65534
   neighbor {{bgp_nbr}} description WAN uplink {{slid}} 
   neighbor {{bgp_nbr}} activate
   neighbor {{bgp_nbr}} soft-reconfiguration inbound
-  neighbor {{bgp_nbr}} route-map SET-MED-IN-10 in
-  neighbor {{bgp_nbr}} route-map BGP-EXPORT-PRI out
+  neighbor {{bgp_nbr}} route-map BGP-IMPORT in
+  neighbor {{bgp_nbr}} route-map BGP-EXPORT out
   no auto-summary
   no synchronization
  exit-address-family
 !
-ip prefix-list BGP-EXPORT description Advertise to PE only networks in this list 
+ip prefix-list BGP-EXPORT description Advertise only networks in this list
 ip prefix-list BGP-EXPORT seq 5 deny 0.0.0.0/0
 ip prefix-list BGP-EXPORT seq 10 permit {{lo_addr}}/32
 !
-route-map BGP-EXPORT-PRI permit 10
+route-map BGP-EXPORT permit 10
  match ip address prefix-list BGP-EXPORT
  set metric 10
 !
-route-map SET-MED-IN-10 permit 10
+route-map BGP-IMPORT permit 10
  set metric 10
- set local-preference 900
+ set local-preference 1000
 !
-route-map SET-MED-IN-20 permit 10
- set metric 20
 !
 route-map BGP-EXPORT-LO permit 10
  match ip address prefix-list BGP-EXPORT
@@ -89,7 +87,6 @@ set routing-instances {{ vrf_name }} protocols bgp group customer family inet un
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} description "Customer name {{slid}}"
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} hold-time 30
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} import customer-EBGP-VRF-{{jslid}}-IMPORT
-set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} import FILTER-NMS-SHARED-POLICY
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} export customer-EBGP-VRF-{{jslid}}-EXPORT
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} peer-as {{local_asn}}
 set routing-instances {{ vrf_name }} protocols bgp group customer neighbor {{ce_wan}} as-override
