@@ -1,1 +1,8 @@
 Console based scripts to generate network device configuration.
+
+- juniper_cisco_pe_ce_config_generator fetch user input and render configuration from
+  template.j2Jinja2 file.
+
+- Cisco base configuration script base_config_generator.py fetch user input anb use jinja2 templates from
+  base_config_templates folder to render basic Cisco configuration for with telnet login. Each jinja
+  template is made for specific Cisco model and uplink interface type (SFP or RJ45).
