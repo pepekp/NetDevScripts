@@ -1,0 +1,113 @@
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+service call-home
+platform punt-keepalive disable-kernel-core
+!
+hostname {{acr}}
+!
+!
+!
+logging buffered 64000
+!
+no aaa new-model
+enable secret cisco
+!
+ip subnet-zero
+no ip source-route
+ip cef
+!
+no ip domain lookup
+no ip domain name yourdomain.com
+!
+no ip source-route
+ip routing
+!
+no ip domain lookup
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+vtp mode transparent
+!
+!
+system mtu 9198
+license boot level network-advantage
+!
+!
+diagnostic bootup level minimal
+!
+spanning-tree mode pvst
+memory free low-watermark processor 134384
+!
+!
+redundancy
+ mode sso
+!
+!
+!
+!
+!
+transceiver type all
+ monitoring
+!
+no cdp run
+!
+!
+!
+!
+interface GigabitEthernet1/0/1
+ description WAN uplink
+ no switchport
+ ip address {{ce_ip}} 255.255.255.252
+ load-interval 30
+
+ no shut
+!
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+ip forward-protocol nd
+ip tcp path-mtu-discovery
+no ip http server 
+ip http authentication local
+no ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 {{pe_ip}}
+!
+!
+!
+!
+line con 0
+ password cisco
+ stopbits 1
+!
+line vty 0 4
+ no access-class 23 in
+ password cisco
+ login
+ transport input telnet ssh
+line vty 5 15
+ transport input none
+
+!
+!
+!
+!
+!
+!
+end
+wr
+!
+

@@ -1,0 +1,108 @@
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname {{acr}}
+!
+logging buffered 64000
+enable secret cisco
+!
+no aaa new-model
+!
+system mtu 9198
+ip routing
+!
+no ip domain-lookup
+!
+vtp mode transparent
+!
+ip vrf service_two
+ rd 65534:200
+!
+no file verify auto
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+interface GigabitEthernet0/0
+shut
+!
+!
+interface GigabitEthernet1/0/1
+ description WAN Uplink
+ no switchport
+ no ip address
+ load-interval 30
+ no shut
+!
+interface GigabitEthernet1/0/1.100
+ description WAN Uplink service one
+ encapsulation dot1Q 100
+ ip address {{ceip_service_one}} 255.255.255.252
+ load-interval 30
+ no shut
+!
+interface GigabitEthernet1/0/1.200
+ description WAN Uplink service two
+ encapsulation dot1Q 200
+ ip vrf forwarding service_two
+ ip address {{ceip_service_two}} 255.255.255.252
+ load-interval 30
+ no shut
+!
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface GigabitEthernet1/0/2
+ description Customer LAN - Servcie one
+!
+interface GigabitEthernet1/0/3
+ description Customer LAN - Service two
+!
+!
+ip route 0.0.0.0 0.0.0.0 {{peip_service_one}}
+ip route vrf service_two 0.0.0.0 0.0.0.0 {{peip_service_two}}
+!
+!
+no ip http server
+!
+!
+no cdp run
+!
+banner login ^C
+
+             ACCESS IS RESTRICTED TO AUTHORISED PERSONNEL ONLY
+
+
+             This system is equipped with a security system
+             intended to prevent and record unauthorised
+             access attempts. Unauthorised access or use
+             shall render the user liable to criminal and or
+             civil prosecution.
+
+^C
+!
+line con 0
+ password cisco
+ stopbits 1
+!
+line vty 0 4
+ no access-class 23 in
+ password cisco
+ login
+ transport input telnet ssh
+line vty 5 15
+ transport input none
+line 2
+ transport input none
+!
+vtp mode transparent
+!
+end
+!
+wr
+!
+

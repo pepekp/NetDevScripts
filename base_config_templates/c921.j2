@@ -1,0 +1,61 @@
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+!
+hostname {{acr}}
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 16000 debugging
+enable secret cisco
+!
+ip subnet-zero
+no ip source-route
+ip cef
+!
+no ip domain lookup
+no ip domain name yourdomain.com
+!
+interface GigabitEthernet4
+ description WAN uplink
+ ip address {{ce_ip}} 255.255.255.252
+
+ no shut
+
+!
+no ip http server
+no ip http secure-server
+!
+no cdp run
+!
+ip route 0.0.0.0 0.0.0.0 {{pe_ip}}
+!
+
+banner login ^C
+
+             ACCESS IS RESTRICTED TO AUTHORISED PERSONNEL ONLY
+
+
+             This system is equipped with a security system
+             intended to prevent and record unauthorised
+             access attempts. Unauthorised access or use
+             shall render the user liable to criminal and or
+             civil prosecution.
+
+^C
+!
+!
+line vty 0 4
+no access-class 23 in
+privilege level 15
+password cisco
+login
+ transport input telnet ssh
+ 
+vtp mode transparent
+!
+end
+!
+wr
+!
