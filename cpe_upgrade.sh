@@ -55,7 +55,7 @@ do
         echo ""
         serverip="169.0.0.254"
         echo ""
-        /usr/bin/expect ./pushers/ios_upgrade_c900.sh $devip $password $srvpassword $serverip
+        /usr/bin/expect ./cpe_upgrade/ios_upgrade_c900.sh $devip $password $srvpassword $serverip
        else
         echo "Something went wrong..."
       fi
@@ -111,7 +111,7 @@ do
         echo $devip $password $srvpassword
         echo ""
         echo ""
-        /usr/bin/expect ./pushers/mpls_ios_upgrade_c900.sh $devip $password $srvpassword
+        /usr/bin/expect ./cpe_upgrade/mpls_ios_upgrade_c900.sh $devip $password $srvpassword
        else
         echo "Something went wrong..."
        fi
@@ -162,7 +162,7 @@ do
         #echo $devip $password $srvpassword
         echo ""
         serverip="169.0.0.254"
-        /usr/bin/expect ./pushers/ios_upgrade_c11xx_mpls.sh $devip $password $srvpassword $serverip
+        /usr/bin/expect ./cpe_upgrade/ios_upgrade_c11xx_mpls.sh $devip $password $srvpassword $serverip
        else
         echo "Something went wrong..."
       fi
@@ -213,7 +213,7 @@ do
         serverip="169.0.0.254"
         #echo $devip $password $srvpassword
         echo ""
-        /usr/bin/expect ./pushers/ios_upgrade_c11xx_mpls.sh $devip $password $srvpassword $serverip
+        /usr/bin/expect ./cpe_upgrade/ios_upgrade_c11xx_mpls.sh $devip $password $srvpassword $serverip
        else
         echo "Something went wrong..."
       fi
@@ -266,7 +266,7 @@ do
         #echo $devip $password $srvpassword
         echo ""
         serverip="213.39.35.41"
-        /usr/bin/expect ./pushers/ios_upgrade_c9300.sh $devip $password $srvpassword $serverip
+        /usr/bin/expect ./cpe_upgrade/ios_upgrade_c9300.sh $devip $password $srvpassword $serverip
        else
         echo "Something went wrong..."
       fi
@@ -319,7 +319,7 @@ do
         #echo $devip $password $srvpassword
         echo ""
         serverip="169.0.0.254"
-        /usr/bin/expect ./pushers/ios_upgrade_c9300_mpls.sh $devip $password $srvpassword $serverip
+        /usr/bin/expect ./cpe_upgrade/ios_upgrade_c9300_mpls.sh $devip $password $srvpassword $serverip
        else
         echo "Something went wrong..."
       fi
@@ -373,7 +373,7 @@ do
         echo ""
         serverip="169.0.0.254"
         echo $devip $password $srvpassword
-       #/usr/bin/expect /home/petropi1/pushers/ios_upgrade_j300.sh $devip $password $srvpassword $serverip
+       #/usr/bin/expect ./cpe_upgrade/ios_upgrade_j300.sh $devip $password $srvpassword $serverip
       else
         echo "Something went wrong..."
       fi

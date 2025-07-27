@@ -1,9 +1,14 @@
-Console based scripts to generate network device configuration.
+Terminal based scripts to generate network device configuration.
 
-- juniper_cisco_pe_ce_config_generator fetch user input and render configuration with Jinja2.
-  Template file is template.j2.
+- juniper_cisco_pe_ce_config_generator fetch user input and render configuration with Jinja2 file.
+  Template file name is template.j2.
 
-- Cisco base configuration script base_config_generator.py fetch user input anb use jinja2 templates from
+- Cisco base configuration script base_config_generator.py fetch user input and use jinja2 templates from
   base_config_templates folder to render basic Cisco configuration. Each jinja
   template is made for specific Cisco model and uplink interface type (SFP or RJ45).
   Only telnet remote access to device is allowed with Cisco default credentials, no AAA and crypto kay.
+
+- cpe_upgrade.sh - Bash script to upgrade Cisco 921, 927, 11xx, Catalist 9k, Juniper SRX 2xx, 3xx. Script
+  will check current software version with SNMP get request and check whether the current version match with
+  predefined software version into the script. If current software version does not comply, user will be prompted to
+  exit or continue with upgrade process. Require Linux SNMP package preinstalled.
